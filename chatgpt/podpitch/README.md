@@ -19,7 +19,7 @@ For product or security concerns, contact [neal@podpitch.com](mailto:neal@podpit
 ## Examples
 
 - Find three podcasts about climate technology and explain their fit using their descriptions.
-- Compare the audiences and topics of two podcasts by their show IDs.
+- Compare the topics and descriptions of two podcasts by their show IDs.
 - Connect my existing PodPitch account and show my campaigns and pitch activity.
 
 [Privacy](https://app.podpitch.com/privacy) | [Terms](https://app.podpitch.com/terms) | [PodPitch](https://podpitch.com)
