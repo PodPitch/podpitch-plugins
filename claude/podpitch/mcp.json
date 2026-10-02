@@ -4,6 +4,10 @@
     "podpitch": {
       "type": "streamable-http",
       "url": "https://api.podpitch.com/v1/mcp"
+    },
+    "podpitch-discovery": {
+      "type": "streamable-http",
+      "url": "https://api.podpitch.com/v1/discovery/mcp/claude"
     }
   }
 }
