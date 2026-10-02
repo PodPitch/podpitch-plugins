@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "podpitch": {
+      "type": "http",
+      "url": "https://api.podpitch.com/v1/mcp"
+    },
+    "podpitch-discovery": {
+      "type": "http",
+      "url": "https://api.podpitch.com/v1/discovery/mcp/claude"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "podpitch",
+  "version": "1.0.0",
+  "description": "Find relevant podcasts without an account. Connect PodPitch to manage campaigns, drafts, inbox replies and outreach within your plan and pitch limits.",
+  "author": {
+    "name": "PodPitch",
+    "email": "neal@podpitch.com",
+    "url": "https://podpitch.com"
+  },
+  "homepage": "https://podpitch.com",
+  "repository": "https://github.com/PodPitch/podpitch-plugins",
+  "keywords": [
+    "podcasts",
+    "podcast discovery",
+    "podcast guests",
+    "media outreach",
+    "public relations",
+    "pitching",
+    "campaigns"
+  ]
+}
