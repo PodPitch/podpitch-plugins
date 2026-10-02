@@ -8,6 +8,10 @@
     "url": "https://podpitch.com"
   },
   "homepage": "https://podpitch.com",
+  "privacyPolicyUrl": "https://app.podpitch.com/privacy",
+  "termsOfServiceUrl": "https://app.podpitch.com/terms",
+  "supportUrl": "https://app.podpitch.com/help",
+  "documentationUrl": "https://github.com/PodPitch/podpitch-plugins/tree/main/claude/podpitch",
   "repository": "https://github.com/PodPitch/podpitch-plugins",
   "keywords": [
     "podcasts",
