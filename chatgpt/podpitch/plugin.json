@@ -97,5 +97,6 @@
         "commerce_description": "The plugin does not sell subscriptions or process payments. Existing customers may connect their existing PodPitch account."
       }
     }
-  }
+  },
+  "license": "MIT"
 }

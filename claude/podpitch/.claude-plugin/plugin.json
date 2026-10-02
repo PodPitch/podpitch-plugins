@@ -17,5 +17,8 @@
     "public relations",
     "pitching",
     "campaigns"
-  ]
+  ],
+  "license": "MIT",
+  "privacyPolicyUrl": "https://app.podpitch.com/privacy",
+  "icon": "assets/icon.png"
 }
