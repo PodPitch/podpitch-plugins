@@ -11,4 +11,6 @@ Account tools require a browser connection to the user's existing PodPitch accou
 
 Read the current record before changing it. Work within the user's requested scope. For a saved pitch, check its stage and edit with edit_pitch_draft; scheduled messages use edit_upcoming_send. Send and schedule only when the user has requested those actions. PodPitch enforces ownership, plan rules, campaign modes, and pitch limits. Do not attempt to bypass limits or use another team's identifiers.
 
-If a tool fails reproducibly, use report_agent_bug with a short summary, expected and actual behavior, and minimal steps. Remove passwords, tokens, credentials, and unrelated conversation content. Explain the failure to the user and include the returned report ID.
+If a tool fails reproducibly and an account is connected, use report_agent_bug with a short summary, expected and actual behavior, and minimal steps. Remove passwords, tokens, credentials, and unrelated conversation content. Explain the failure to the user and include the returned report ID.
+
+For an anonymous discovery failure, explain the problem and direct the user to neal@podpitch.com for support. Do not request account access solely to file a report.
