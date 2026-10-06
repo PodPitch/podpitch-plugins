@@ -36,7 +36,7 @@ def main():
     parser.add_argument('--limit', type=int, choices=range(1, 11), default=3)
     parser.add_argument('--id')
     args = parser.parse_args()
-    if not args.id and (not args.query or not words(args.query)):
+    if not args.id and (not args.query or not args.query.strip()):
         parser.error('Provide a topic, show name, or --id returned by search.')
     catalog = json.loads(CATALOG.read_text())
     podcasts = ([podcast for podcast in catalog['podcasts'] if podcast['id'] == args.id]
