@@ -135,6 +135,12 @@ def test_snapshot_cli_enforces_limit_and_default(snapshot_helper):
     {"source": "test", "captured_at": "date"},
     {"source": "test", "captured_at": "date", "podcasts": None},
     {"source": "test", "captured_at": "date", "podcasts": {}},
+    {"source": "test", "captured_at": "date", "podcasts": [{}]},
+    {"source": "test", "captured_at": "date", "podcasts": [None]},
+    {"source": "test", "captured_at": "date", "shards": None, "record_count": 0},
+    {"source": "test", "captured_at": "date", "shards": [None], "record_count": 0},
+    {"source": "test", "captured_at": "date", "shards": [{}], "record_count": 0},
+    {"source": "test", "captured_at": "date", "shards": [], "record_count": None},
 ])
 def test_invalid_catalog_shape_returns_clear_error(snapshot_helper, invalid_catalog):
     script, _ = snapshot_helper
