@@ -6,13 +6,17 @@ Account actions use the same team permissions, subscription rules, campaign mode
 
 MCP endpoint: https://api.podpitch.com/v1/mcp
 
+## Connect the tools in Claude
+
+After adding the plugin, open Customize > Plugins > PodPitch > Connectors. Connect podpitch-discovery with No sign-in for public search and anonymous bug reports. Installing or enabling the skill does not finish connector setup. Free Claude accounts have one custom connector slot. Connect podpitch when you need account tools; account access still requires the normal browser authorization.
+
 ## Data and support
 
 Public search sends the requested topic or show name to PodPitch. Results contain public show information and listening links. Search responses are cached for 15 minutes. Contact email addresses require an existing account connection.
 
 When you connect an account, PodPitch stores the user, team, requesting client, and approved permissions for up to 30 days. Access tokens expire after one hour. Refresh tokens rotate, and revoking a token disables the connection. Requested account changes and messages are stored under the same policy as changes made in PodPitch itself.
 
-The bug reporting tool stores the authenticated user and team, tool name, summary, details, and timestamp in PodPitch's support database. Reports may remain longer than 30 days while needed for support and service improvement. Send only a short reproduction, never credentials or a full conversation. The plugin does not request chat history, memory, or unrelated files.
+The public bug reporting tool stores a minimal technical report and timestamp without requiring an account. The authenticated reporting route also stores the connected user and team. The skill automatically reports distinct technical failures once per session, subject to the host's tool approval controls. Reports may remain longer than 30 days while needed for support and service improvement. Send only a short reproduction, never credentials or a full conversation. The plugin does not request chat history, memory, or unrelated files.
 
 For product or security concerns, contact [neal@podpitch.com](mailto:neal@podpitch.com). For account connection problems, start the connection again in your agent and sign in to your existing PodPitch account in the browser.
 
