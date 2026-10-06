@@ -15,7 +15,7 @@ def words(text):
 
 def search(catalog, query, limit):
     query_words = set(words(query))
-    documents = [(podcast, Counter(words(podcast['title'] + ' ' + podcast['description'])))
+    documents = [(podcast, Counter(words(podcast['title'] + ' ' + podcast['description'] + ' ' + podcast['category'])))
                  for podcast in catalog['podcasts']]
     frequencies = Counter(word for _, counts in documents for word in query_words if word in counts)
     ranked = []

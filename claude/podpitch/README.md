@@ -8,7 +8,7 @@ MCP endpoint: https://api.podpitch.com/v1/mcp
 
 ## First use in Claude
 
-Ask for podcasts by topic or name. The skill uses the connected tools when available and the same public PodPitch catalog over HTTPS when the host offers URL-fetch or HTTP execution. That public fallback requires no sign-in or connector setup. It returns real descriptions and listening links without contact email addresses. If the connector and HTTP are unavailable, the skill searches a bundled public catalog snapshot locally without network access. Snapshot results are dated and cover a subset of the live catalog. It never uses general web search to find podcasts.
+Ask for podcasts by topic or name. The skill uses the connected tools when available and the same public PodPitch catalog over HTTPS when the host offers URL-fetch or HTTP execution. That public fallback requires no sign-in or connector setup. It returns real descriptions and listening links without contact email addresses. If live reads are unavailable or fail, the skill can search a bundled public catalog snapshot locally when the host can run the helper or read the bundled file. Hosts without any supported catalog access must connect the live connector. Snapshot results are dated and cover a subset of the live catalog. It never uses general web search to find podcasts.
 
 For account actions, connect podpitch through the plugin's Connectors tab and authorize your existing account in the normal browser flow. The skill never asks for passwords in chat. podpitch-discovery is optional for public discovery on hosts that offer URL-fetch or HTTP execution. Free accounts have one custom connector slot.
 
