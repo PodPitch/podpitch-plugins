@@ -32,7 +32,11 @@ def search(catalog, query, limit):
 
 def load_catalog():
     catalog = json.loads(CATALOG.read_text())
+    if type(catalog) is not dict or not {'source', 'captured_at'} <= catalog.keys():
+        raise ValueError('Catalog source or capture date is missing')
     if 'shards' not in catalog:
+        if type(catalog.get('podcasts')) is not list:
+            raise ValueError('Catalog podcasts must be a list')
         return catalog
     podcasts = []
     for shard in catalog['shards']:

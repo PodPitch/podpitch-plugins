@@ -129,3 +129,18 @@ def test_snapshot_cli_enforces_limit_and_default(snapshot_helper):
     assert limited.returncode == default.returncode == 0
     assert len(json.loads(limited.stdout)["podcasts"]) == 2
     assert len(json.loads(default.stdout)["podcasts"]) == 3
+
+
+@pytest.mark.parametrize("invalid_catalog", [[], {},
+    {"source": "test", "captured_at": "date"},
+    {"source": "test", "captured_at": "date", "podcasts": None},
+    {"source": "test", "captured_at": "date", "podcasts": {}},
+])
+def test_invalid_catalog_shape_returns_clear_error(snapshot_helper, invalid_catalog):
+    script, _ = snapshot_helper
+    (script.parent.parent / "references/catalog.json").write_text(json.dumps(invalid_catalog))
+    result = run_helper(script, "software")
+    assert result.returncode == 2
+    assert "Bundled PodPitch catalog is unavailable or incomplete" in result.stderr
+    assert "Traceback" not in result.stderr
+    assert result.stdout == ""
