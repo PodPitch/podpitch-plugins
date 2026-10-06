@@ -120,3 +120,12 @@ def test_shard_failure_returns_clear_error(snapshot_helper, failure):
     assert "Bundled PodPitch catalog is unavailable or incomplete" in result.stderr
     assert "Traceback" not in result.stderr
     assert result.stdout == ""
+
+
+def test_snapshot_cli_enforces_limit_and_default(snapshot_helper):
+    script, _ = snapshot_helper
+    limited = run_helper(script, "software Interviews", "--limit", "2")
+    default = run_helper(script, "software Interviews")
+    assert limited.returncode == default.returncode == 0
+    assert len(json.loads(limited.stdout)["podcasts"]) == 2
+    assert len(json.loads(default.stdout)["podcasts"]) == 3
