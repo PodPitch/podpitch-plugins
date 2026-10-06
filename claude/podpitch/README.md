@@ -6,9 +6,17 @@ Account actions use the same team permissions, subscription rules, campaign mode
 
 MCP endpoint: https://api.podpitch.com/v1/mcp
 
-## Connect the tools in Claude
+## First use in Claude
 
-After adding the plugin, open Customize > Plugins > PodPitch > Connectors. Connect podpitch-discovery with No sign-in for public search and anonymous bug reports. Installing or enabling the skill does not finish connector setup. Free Claude accounts have one custom connector slot. Connect podpitch when you need account tools; account access still requires the normal browser authorization.
+Ask for podcasts by topic or name. The skill uses the connected tools when available and the same public PodPitch catalog over HTTPS when the host offers URL-fetch or HTTP execution. That public fallback requires no sign-in or connector setup. It returns real descriptions and listening links without contact email addresses. If live reads are unavailable or fail, the skill can search a bundled public catalog snapshot locally when the host can run the helper or read the bundled file. Hosts without any supported catalog access must connect the live connector. Snapshot results are dated and cover a subset of the live catalog. It never uses general web search to find podcasts.
+
+For account actions, connect podpitch through the plugin's Connectors tab and authorize your existing account in the normal browser flow. The skill never asks for passwords in chat. podpitch-discovery is optional for public discovery on hosts that offer URL-fetch or HTTP execution. Free accounts have one custom connector slot.
+
+The demo link works without a connector: https://podpitch.com/demo?utm_source=claude&utm_medium=mcp&utm_campaign=podcast_discovery.
+
+Each result includes available listener estimates, social follower totals and guest-format flags. Monthly listener estimates use four weeks of estimated downloads and are not verified unique listener counts. Current booking availability remains unknown without dated evidence.
+
+Public HTTPS reads: `/v1/discovery/podcasts?query=TOPIC&limit=3` and `/v1/discovery/podcasts/RETURNED_ID` on `https://api.podpitch.com`. These reuse the MCP catalog filtering, sanitization, caching and rate limits.
 
 ## Data and support
 
