@@ -39,6 +39,9 @@ def main():
     if not args.id and (not args.query or not args.query.strip()):
         parser.error('Provide a topic, show name, or --id returned by search.')
     catalog = json.loads(CATALOG.read_text())
+    if 'shards' in catalog:
+        catalog['podcasts'] = [podcast for shard in catalog['shards']
+                               for podcast in json.loads((CATALOG.parent / shard['path']).read_text())['podcasts']]
     podcasts = ([podcast for podcast in catalog['podcasts'] if podcast['id'] == args.id]
                 if args.id else search(catalog, args.query, args.limit))
     print(json.dumps({'source': catalog['source'], 'captured_at': catalog['captured_at'],
