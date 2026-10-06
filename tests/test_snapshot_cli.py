@@ -27,7 +27,9 @@ def snapshot_helper(tmp_path, request):
         (tmp_path / "references/catalog.json").write_text(json.dumps(catalog))
     else:
         index = {key: value for key, value in catalog.items() if key != "podcasts"}
-        index["shards"] = [{"path": "catalog-001.json"}, {"path": "catalog-002.json"}]
+        index["record_count"] = len(catalog["podcasts"])
+        index["shards"] = [{"path": "catalog-001.json", "record_count": 1},
+                           {"path": "catalog-002.json", "record_count": 2}]
         (tmp_path / "references/catalog.json").write_text(json.dumps(index))
         (tmp_path / "references/catalog-001.json").write_text(json.dumps({"podcasts": catalog["podcasts"][:1]}))
         (tmp_path / "references/catalog-002.json").write_text(json.dumps({"podcasts": catalog["podcasts"][1:]}))
@@ -74,4 +76,47 @@ def test_snapshot_cli_rejects_missing_query_and_invalid_limit(snapshot_helper, a
     result = run_helper(script, *arguments)
     assert result.returncode == 2
     assert "error:" in result.stderr
+    assert result.stdout == ""
+
+
+def test_shipped_catalog_is_complete_and_searchable():
+    skill = Path(__file__).resolve().parents[1] / "claude/podpitch/skills/podcast-discovery"
+    index = json.loads((skill / "references/catalog.json").read_text())
+    records = []
+    for shard in index["shards"]:
+        shard_path = skill / "references" / shard["path"]
+        payload = json.loads(shard_path.read_text())
+        assert shard_path.stat().st_size < 128_000
+        assert len(payload["podcasts"]) == shard["record_count"]
+        records.extend(payload["podcasts"])
+    assert len(records) == index["record_count"] == 5848
+    assert len({record["id"] for record in records}) == 5848
+    result = run_helper(skill / "scripts/discover.py", "B2B SaaS founders", "--limit", "3")
+    assert result.returncode == 0, result.stderr
+    assert [record["id"] for record in json.loads(result.stdout)["podcasts"]] == [
+        "A1338265938", "A1495008122", "A1538169815",
+    ]
+
+
+@pytest.mark.parametrize("failure", ["missing", "invalid_json", "wrong_shard_count", "wrong_total_count"])
+def test_shard_failure_returns_clear_error(snapshot_helper, failure):
+    script, _ = snapshot_helper
+    index_path = script.parent.parent / "references/catalog.json"
+    index = json.loads(index_path.read_text())
+    if "shards" not in index:
+        pytest.skip("Shard failure applies to sharded catalogs")
+    shard_path = index_path.parent / index["shards"][0]["path"]
+    if failure == "missing":
+        shard_path.unlink()
+    elif failure == "invalid_json":
+        shard_path.write_text("{")
+    elif failure == "wrong_shard_count":
+        index["shards"][0]["record_count"] = 3
+    else:
+        index["record_count"] = 4
+    index_path.write_text(json.dumps(index))
+    result = run_helper(script, "software")
+    assert result.returncode == 2
+    assert "Bundled PodPitch catalog is unavailable or incomplete" in result.stderr
+    assert "Traceback" not in result.stderr
     assert result.stdout == ""

@@ -30,6 +30,22 @@ def search(catalog, query, limit):
     return [podcast for _, podcast in ranked[:limit]]
 
 
+def load_catalog():
+    catalog = json.loads(CATALOG.read_text())
+    if 'shards' not in catalog:
+        return catalog
+    podcasts = []
+    for shard in catalog['shards']:
+        records = json.loads((CATALOG.parent / shard['path']).read_text())['podcasts']
+        if len(records) != shard['record_count']:
+            raise ValueError(f"Record count mismatch in {shard['path']}")
+        podcasts.extend(records)
+    if len(podcasts) != catalog['record_count']:
+        raise ValueError('Total catalog record count mismatch')
+    catalog['podcasts'] = podcasts
+    return catalog
+
+
 def main():
     parser = argparse.ArgumentParser(description='Search the bundled public PodPitch snapshot without network access.')
     parser.add_argument('query', nargs='?')
@@ -38,10 +54,10 @@ def main():
     args = parser.parse_args()
     if not args.id and (not args.query or not args.query.strip()):
         parser.error('Provide a topic, show name, or --id returned by search.')
-    catalog = json.loads(CATALOG.read_text())
-    if 'shards' in catalog:
-        catalog['podcasts'] = [podcast for shard in catalog['shards']
-                               for podcast in json.loads((CATALOG.parent / shard['path']).read_text())['podcasts']]
+    try:
+        catalog = load_catalog()
+    except (OSError, ValueError, KeyError) as error:
+        parser.error(f'Bundled PodPitch catalog is unavailable or incomplete: {error}')
     podcasts = ([podcast for podcast in catalog['podcasts'] if podcast['id'] == args.id]
                 if args.id else search(catalog, args.query, args.limit))
     print(json.dumps({'source': catalog['source'], 'captured_at': catalog['captured_at'],
