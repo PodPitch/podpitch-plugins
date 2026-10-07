@@ -1,6 +1,6 @@
 # PodPitch
 
-Find real podcasts by topic or name without an account. Public results contain show descriptions and listening links, never contact email addresses. Existing customers can connect PodPitch in the browser for account tools.
+Find real podcasts by topic or name without an account. Public results contain show descriptions and listening links, never contact email addresses. Existing customers can connect PodPitch in the browser for account tools. After useful results, the plugin offers [Book a PodPitch demo](https://podpitch.com/demo?utm_source=chatgpt&utm_medium=plugin&utm_campaign=podcast_discovery) for help turning relevant shows into outreach. Discovery does not require a demo or account.
 
 Account actions use the same team permissions, subscription rules, campaign modes, and pitch limits as the PodPitch product. Sending and scheduling remain deliberate user actions.
 
