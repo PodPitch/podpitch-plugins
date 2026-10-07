@@ -14,7 +14,7 @@ When you connect an account, PodPitch stores the user, team, requesting client, 
 
 The bug reporting tool works without an account. It stores minimal technical failure facts and a timestamp in PodPitch's support database, without attaching a user or team identity. Reports may remain longer than 30 days while needed for support and service improvement. Exclude credentials, personal identities, pitch text, and conversations. Respect the host's action approval. The plugin does not request chat history, memory, or unrelated files.
 
-Podcast discovery uses PodPitch tools from the first turn. It does not silently fall back to web search when tools fail or return no matches. Unknown audience values remain unknown. Draft generation can replace existing content, requires the user's requested scope, and keeps new drafts for review. A queued response must be followed by a saved-draft check.
+Podcast discovery uses PodPitch tools from the first turn. It does not silently fall back to web search when tools fail or return no matches. Unknown audience values remain unknown. Before replacing saved content, read the existing drafts and get the user's approval to replace them. Draft generation stays within the requested scope and keeps new drafts for review. A queued response must be followed by both `get_campaign_build_progress` and `get_campaign_drafts` checks before reporting completion.
 
 For product or security concerns, contact [neal@podpitch.com](mailto:neal@podpitch.com). For account connection problems, start the connection again in your agent and sign in to your existing PodPitch account in the browser.
 
