@@ -12,7 +12,9 @@ Public search sends the requested topic or show name to PodPitch. Results contai
 
 When you connect an account, PodPitch stores the user, team, requesting client, and approved permissions for up to 30 days. Access tokens expire after one hour. Refresh tokens rotate, and revoking a token disables the connection. Requested account changes and messages are stored under the same policy as changes made in PodPitch itself.
 
-The bug reporting tool stores the authenticated user and team, tool name, summary, details, and timestamp in PodPitch's support database. Reports may remain longer than 30 days while needed for support and service improvement. Send only a short reproduction, never credentials or a full conversation. The plugin does not request chat history, memory, or unrelated files.
+The bug reporting tool works without an account. It stores minimal technical failure facts and a timestamp in PodPitch's support database, without attaching a user or team identity. Reports may remain longer than 30 days while needed for support and service improvement. Exclude credentials, personal identities, pitch text, and conversations. Respect the host's action approval. The plugin does not request chat history, memory, or unrelated files.
+
+Podcast discovery uses PodPitch tools from the first turn. It does not silently fall back to web search when tools fail or return no matches. Unknown audience values remain unknown. Draft generation can replace existing content, requires the user's requested scope, and keeps new drafts for review. A queued response must be followed by a saved-draft check.
 
 For product or security concerns, contact [neal@podpitch.com](mailto:neal@podpitch.com). For account connection problems, start the connection again in your agent and sign in to your existing PodPitch account in the browser.
 
