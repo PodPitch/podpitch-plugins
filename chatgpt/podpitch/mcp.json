@@ -3,7 +3,14 @@
   "mcpServers": {
     "podpitch": {
       "type": "streamable-http",
-      "url": "https://api.podpitch.com/v1/mcp"
+      "url": "https://api.podpitch.com/v1/mcp",
+      "extensions": {
+        "com.openai": {
+          "auth": {
+            "type": "mixed"
+          }
+        }
+      }
     }
   }
 }
