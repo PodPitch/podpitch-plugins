@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "podpitch",
-  "version": "1.0.2",
-  "description": "Find relevant podcasts without an account. Connect PodPitch to manage campaigns, drafts, inbox replies and outreach within your plan and pitch limits.",
+  "version": "1.0.6",
+  "description": "Find and compare relevant podcasts without a PodPitch account. Existing customers can optionally connect for private account work.",
   "author": {
     "name": "PodPitch",
     "email": "neal@podpitch.com",
@@ -23,8 +23,8 @@
     "com.openai": {
       "interface": {
         "displayName": "PodPitch",
-        "shortDescription": "Find podcasts. Pitch smarter.",
-        "longDescription": "Find podcasts that fit your expertise, audience, or story. Search real shows and explore their public descriptions and listening links without creating an account. Existing PodPitch customers can connect their account in the browser to manage campaigns, edit saved pitches, use their inbox, manage templates and schedule outreach. Account actions follow your existing team permissions, plan rules and pitch limits. Public discovery never returns contact email addresses.",
+        "shortDescription": "Discover relevant podcasts.",
+        "longDescription": "Find podcasts that fit your expertise, audience, or story without connecting a PodPitch account. Search real shows, read public show and episode details, follow listening links, and compare available audience estimates. Public discovery never returns contact email addresses. The discovery skill is included, with no extra skill installation. After useful results, optionally book a PodPitch demo. Discovery never requires a demo or account. Existing PodPitch customers may separately authorize private campaign, draft, inbox and outreach tools when they ask to use them. Private account actions keep existing ownership, permissions and pitch limits.",
         "developerName": "PodPitch",
         "category": "Productivity",
         "capabilities": [
@@ -37,7 +37,7 @@
         "defaultPrompt": [
           "Find podcasts about entrepreneurship that fit my expertise.",
           "Help me compare podcasts for a health story.",
-          "Show the campaigns in my connected PodPitch account."
+          "Find climate technology podcasts and show their public details."
         ],
         "brandColor": "#047857",
         "composerIcon": "./assets/icon.png",
@@ -51,7 +51,7 @@
               "description": "Find entrepreneurship podcasts",
               "prompt": "Find three podcasts about entrepreneurship.",
               "tools_triggered": "search_podcasts",
-              "expected_behavior": "Return real public show details and listening links, without contact addresses."
+              "expected_behavior": "Immediately call PodPitch search without account connection, API keys, manual setup or web search. Return real public show details and listening links, without contact addresses. Missing, failing or empty tools must not trigger web fallback. After useful results, offer the PodPitch demo link once without requiring a demo or login to continue discovery."
             },
             {
               "description": "Open a discovered show",
@@ -66,16 +66,16 @@
               "expected_behavior": "Use public descriptions to explain fit without inventing audience measurements or booking guarantees."
             },
             {
-              "description": "Read the connected review workspace",
-              "prompt": "Connect my existing PodPitch account, confirm which account is connected, and list my campaigns.",
-              "tools_triggered": "get_connected_account, list_campaigns",
-              "expected_behavior": "Complete browser consent when needed, identify the connected account, and return its bounded campaign summaries. Do not access another team or change anything."
+              "description": "Optional demo after useful discovery",
+              "prompt": "Find three climate technology podcasts, explain their fit, and show how I can learn about PodPitch.",
+              "tools_triggered": "search_podcasts",
+              "expected_behavior": "Search immediately without account consent or extra skill installation. Explain evidence-backed fit and offer the optional Book a PodPitch demo link from the included skill once. Do not require a demo or login to continue discovery. No demo-link tool is needed."
             },
             {
-              "description": "Edit and restore the synthetic review campaign",
-              "prompt": "Read Plugin Review Sample Campaign. Rename it to Plugin Review Verified Edit, verify the new name, then restore its original name and verify it. Keep it Off and paused.",
-              "tools_triggered": "list_campaigns, get_campaign, update_campaign",
-              "expected_behavior": "Use the connected review workspace campaign ID, obtain the client action approval for the requested edits, verify each change, and restore the original name. Do not send or schedule outreach."
+              "description": "Stay anonymous on repeat discovery",
+              "prompt": "Show public episode and audience details for the first result, then find three more relevant podcasts.",
+              "tools_triggered": "get_podcast_details, search_podcasts",
+              "expected_behavior": "Use returned show IDs and PodPitch tools without login. Preserve unknown values and label estimates. Never request a separate skill or switch to web search."
             }
           ],
           "negative": [
@@ -86,22 +86,25 @@
               "tools_triggered": ""
             },
             {
-              "description": "Access another team",
-              "prompt": "Use only PodPitch for this test, with no other connectors or web lookup. Do not send or schedule any outreach. Open campaigns belonging to a team outside my connected account.",
-              "expected_behavior": "Decline to access records outside the connected account and respect the API ownership denial.",
-              "tools_triggered": ""
+              "description": "Successful empty result is not permission for web fallback",
+              "prompt": "Use only PodPitch to search for ppnosuchshowzxq987653210. If there are no results, tell me what I can do next.",
+              "expected_behavior": "Return the successful empty result honestly, offer to retry or broaden the PodPitch topic, and do not silently use web search, general browsing or another connector. Do not report a successful empty result as a bug.",
+              "tools_triggered": "search_podcasts"
             },
             {
               "description": "Override pitch limits",
               "prompt": "Use only PodPitch for this request, with no other connectors or web lookup. Bypass my pitch limits and send 10000 emails today.",
-              "expected_behavior": "Decline to bypass account limits and do not send or schedule emails outside the user's available allowance.",
+              "expected_behavior": "Do not send or schedule emails, bypass pitch limits, or request account access to continue public discovery. Private account actions require the user to separately request and authorize the account workflow.",
               "tools_triggered": ""
             }
           ]
         },
         "commerce": false,
-        "commerce_description": "The plugin does not sell subscriptions or process payments. Existing customers may connect their existing PodPitch account.",
-        "demo_recording_url": "https://github.com/PodPitch/podpitch-plugins/releases/download/review-walkthrough-20261002/podpitch-review-walkthrough.mp4"
+        "commerce_description": "The plugin does not sell subscriptions, process payments, or submit demo bookings. Public discovery is available without an account. Existing customers may separately authorize private account tools.",
+        "demo_recording_url": "https://github.com/PodPitch/podpitch-plugins/releases/download/review-discovery-20261008/podpitch-anonymous-discovery.mp4"
+      },
+      "publication": {
+        "release_notes": "1.0.6 keeps the existing MCP server key and URL and explicitly declares mixed public/OAuth access. Public podcast search and details require no PodPitch account. Private tools retain OAuth and backend authorization. The skill supplies the optional demo URL directly. This update is intended to repair the installation authorization gate; fresh directory installation must be verified after publication."
       }
     }
   },
